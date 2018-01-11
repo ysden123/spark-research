@@ -25,15 +25,15 @@ object LinearFunction {
     require(coefficients.length > 1, "coefficients should have length more than 0")
 
     (for {_ <- 1 to numberOfSamples} yield {
-      val random0 = new Random(Random.nextInt())
+      val random = new Random(Random.nextInt())
 
       // Generate parameters
-      val parameters = (for (_ <- 1 until coefficients.length) yield random0.nextDouble()).toVector
+      val parameters = (for (_ <- 1 until coefficients.length) yield random.nextDouble()).toVector
 
       // Calculate function value
       val result = coefficients(0) + parameters
         .zipWithIndex
-        .map(parameter => parameter._1 * coefficients(parameter._2 + 1))
+        .map(parameter => parameter._1 * coefficients(parameter._2 + 1) * (100.0 - deviation * random.nextDouble()) / 100.0)
         .sum
 
       (result, parameters)

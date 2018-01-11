@@ -25,9 +25,20 @@ class LinearFunctionTest extends FlatSpec with Matchers {
     )
   }
 
-  it should "generate vector" in {
+  it should "generate vector (deviation is 0.0)" in {
     val numberOfSamples = 200
     val result = LinearFunction.generate(numberOfSamples, Vector(10.0, 1.0, 2.0), 0.0)
+    //    result.foreach(println)
+    result.length shouldBe numberOfSamples
+    result.foreach(r => {
+      (r._1 > 10) shouldBe true
+      (r._2.sum <= (1.0 + 3.0)) shouldBe true
+    })
+  }
+
+  it should "generate vector (deviation is  5.0)" in {
+    val numberOfSamples = 200
+    val result = LinearFunction.generate(numberOfSamples, Vector(10.0, 1.0, 2.0), 5.0)
     //    result.foreach(println)
     result.length shouldBe numberOfSamples
     result.foreach(r => {
