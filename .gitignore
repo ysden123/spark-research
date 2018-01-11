@@ -1,2 +1,6 @@
 *.class
 *.log
+.idea/codeStyles/Project.xml
+.idea/
+project/target/
+target/
