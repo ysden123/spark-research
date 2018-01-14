@@ -37,12 +37,16 @@ object LinearRegressionModelRunner extends App with LazyLogging {
 
   logger.info(s"model.coefficients: ${model.coefficients}")
 
-
   // Perform test
   logger.info("Perform test")
   val testData = Vector(LabeledPoint(11.0, Vectors.dense(10.0, 20.0))).toDF()
   val result = model.transform(testData)
-  result.show
+  //  result.show
+  //  println(result.foreach(r => println(r.getDouble(2))))
+  //  println(result.foreach(r => println(r.getAs[Double]("prediction"))))
+  println(s"Result is ${result.head().getAs[Double]("prediction")}")
+
+  //  model.transform(Vector(LabeledPoint(0.0, Vectors.dense(10.0, 20.0))).toDF()).show
 
   spark.close()
 }
