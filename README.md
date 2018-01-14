@@ -5,6 +5,6 @@ Spark research - usage of Spark
 
 ## RegressionModelMaster
  - builds linear model
- - calculate prediction
+ - calculates prediction
  - saves model on disk
- - load model from disk
+ - loads model from disk

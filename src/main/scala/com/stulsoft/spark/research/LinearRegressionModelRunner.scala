@@ -32,18 +32,19 @@ object LinearRegressionModelRunner extends App with LazyLogging {
   logger.info("Perform test")
   master.predict(Vector(10.0, 20.0)) match {
     case Success(result) => logger.info(s"Result (1) is $result")
+    case Failure(e) => logger.error(s"Failed prediction. Error is ${e.getMessage}" )
   }
 
   logger.info("Perform test")
   master.predict(Vector(10.0)) match {
     case Success(result) => logger.info(s"Result (2) is $result")
-    case Failure(e) => logger.error(e.getMessage)
+    case Failure(e) => logger.error(s"Failed prediction (2). Error is ${e.getMessage}" )
   }
 
   logger.info("Perform test")
   master.predict(Vector(10.0, 20.0, 30.0)) match {
     case Success(result) => logger.info(s"Result (3) is $result")
-    case Failure(e) => logger.error(e.getMessage)
+    case Failure(e) => logger.error(s"Failed prediction (3). Error is ${e.getMessage}" )
   }
 
 

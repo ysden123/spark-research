@@ -8,8 +8,8 @@ lazy val log4jVersion = "2.10.0"
 lazy val log4jApiScalaVersion = "11.0"
 
 lazy val commonSettings = Seq(
-  organization := "com.stulsoft.log-analyzer",
-  version := "1.1.2",
+  organization := "com.stulsoft.spark-research",
+  version := "1.0.1",
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq(
     "-feature",
