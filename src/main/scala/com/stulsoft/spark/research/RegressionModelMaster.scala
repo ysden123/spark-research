@@ -71,12 +71,15 @@ class RegressionModelMaster(val sparkSession: SparkSession) extends LazyLogging 
       logger.error("Model doesn't exist. Call buildModel before predict")
       Failure(new IllegalStateException("A model was not created"))
     } else {
-      Try {
-        model
-          .transform(Vector(LabeledPoint(0.0, Vectors.dense(values.toArray))).toDF)
-          .head()
-          .getAs[Double]("prediction")
-      }
+      if (values.length != model.numFeatures)
+        Failure(new IllegalArgumentException(s"RegressionModelMaster.predict: number of values ${values.length} should be equal to ${model.numFeatures}"))
+      else
+        Try {
+          model
+            .transform(Vector(LabeledPoint(0.0, Vectors.dense(values.toArray))).toDF)
+            .head()
+            .getAs[Double]("prediction")
+        }
     }
   }
 

@@ -6,10 +6,9 @@ package com.stulsoft.spark.research
 
 import com.stulsoft.spark.research.data.generator.LinearFunction
 import com.typesafe.scalalogging.LazyLogging
-import org.apache.spark.ml.feature.LabeledPoint
-import org.apache.spark.ml.linalg.Vectors
-import org.apache.spark.ml.regression.LinearRegression
 import org.apache.spark.sql.SparkSession
+
+import scala.util.{Failure, Success}
 
 /** Runs Linear Regression model
   *
@@ -21,32 +20,32 @@ object LinearRegressionModelRunner extends App with LazyLogging {
     .appName("Linear Regression model")
     .getOrCreate()
 
-  import spark.implicits._
-
   // Getting data for training
   logger.info("Getting data for training")
   val trainingData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
-    .map(d => LabeledPoint(d._1, Vectors.dense(d._2.toArray)))
-    .toDF
 
-
-  // Build model
-  logger.info("Building model ...")
-  val lr = new LinearRegression
-  val model = lr.fit(trainingData)
-
-  logger.info(s"model.coefficients: ${model.coefficients}")
+  val master = new RegressionModelMaster(spark)
+  val model = master.buildModel(trainingData)
+  logger.info(s"model.coefficients: ${model.coefficients}, model.numFeatures = ${model.numFeatures}")
 
   // Perform test
   logger.info("Perform test")
-  val testData = Vector(LabeledPoint(11.0, Vectors.dense(10.0, 20.0))).toDF()
-  val result = model.transform(testData)
-  //  result.show
-  //  println(result.foreach(r => println(r.getDouble(2))))
-  //  println(result.foreach(r => println(r.getAs[Double]("prediction"))))
-  println(s"Result is ${result.head().getAs[Double]("prediction")}")
+  master.predict(Vector(10.0, 20.0)) match {
+    case Success(result) => logger.info(s"Result (1) is $result")
+  }
 
-  //  model.transform(Vector(LabeledPoint(0.0, Vectors.dense(10.0, 20.0))).toDF()).show
+  logger.info("Perform test")
+  master.predict(Vector(10.0)) match {
+    case Success(result) => logger.info(s"Result (2) is $result")
+    case Failure(e) => logger.error(e.getMessage)
+  }
+
+  logger.info("Perform test")
+  master.predict(Vector(10.0, 20.0, 30.0)) match {
+    case Success(result) => logger.info(s"Result (3) is $result")
+    case Failure(e) => logger.error(e.getMessage)
+  }
+
 
   spark.close()
 }
