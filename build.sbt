@@ -17,6 +17,8 @@ lazy val commonSettings = Seq(
     "-language:postfixOps"),
   libraryDependencies ++= Seq(
     "org.apache.spark" %% "spark-core" % sparkVersion,
+    "org.apache.spark" %% "spark-mllib" % sparkVersion,
+    "org.apache.spark" %% "spark-sql" % sparkVersion,
     "com.typesafe.scala-logging" %% "scala-logging" % scalaLoggingVersion,
     "org.apache.logging.log4j" % "log4j-api" % log4jVersion,
     "org.apache.logging.log4j" % "log4j-core" % log4jVersion,
