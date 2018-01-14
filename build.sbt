@@ -27,10 +27,6 @@ lazy val commonSettings = Seq(
   )
 )
 
-//resolvers += "Spark Packages Repo" at "http://dl.bintray.com/spark-packages/maven"
-//resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
-//resolvers += "Repo at github.com/ankurdave/maven-repo" at "https://github.com/ankurdave/maven-repo/raw/master"
-
 lazy val sparkResearch = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
