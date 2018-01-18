@@ -23,8 +23,6 @@ class GeneralizedLinearRegressionMaster(val sparkSession: SparkSession) extends 
     require(trainingData != null && trainingData.nonEmpty, "trainingData should be specified")
     val lr = new GeneralizedLinearRegression()
       .setFamily("gaussian")
-      .setLink("identity")
-      .setMaxIter(10)
 
     model = lr.fit(trainingData.map(d => LabeledPoint(d._1, Vectors.dense(d._2.toArray))).toDF)
 

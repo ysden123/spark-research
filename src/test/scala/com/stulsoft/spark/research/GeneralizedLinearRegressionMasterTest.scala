@@ -19,7 +19,7 @@ class GeneralizedLinearRegressionMasterTest extends FlatSpec with Matchers with 
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     val m = new GeneralizedLinearRegressionMaster(sparkSession)
     val _ = m.buildModel(experimentalData)
-    m.saveModel("regression-model-test") match {
+    m.saveModel(modelPath) match {
       case Success(r) => r shouldBe true
       case Failure(e) => fail(e.getMessage)
     }
@@ -42,7 +42,7 @@ class GeneralizedLinearRegressionMasterTest extends FlatSpec with Matchers with 
       case Success(_) =>
         fail("cannot work with missed model")
       case Failure(x) =>
-        println(x.getMessage)
+        //        println(x.getMessage)
         succeed
     }
   }
@@ -51,12 +51,12 @@ class GeneralizedLinearRegressionMasterTest extends FlatSpec with Matchers with 
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     val m = new GeneralizedLinearRegressionMaster(sparkSession)
     val model = m.buildModel(experimentalData)
-    println(s"model.coefficients: ${model.coefficients}")
-    println(s"model.summary.numIterations: ${model.summary.numIterations}")
+    //    println(s"model.coefficients: ${model.coefficients}")
+    //    println(s"model.summary.numIterations: ${model.summary.numIterations}")
 
     m.predict(Vector(10.0, 20)) match {
       case Success(prediction) =>
-        println(s"prediction=$prediction")
+        //        println(s"prediction=$prediction")
         Math.abs(prediction - 60.0) * 100.0 / 60.0 should be <= 1.0
       case Failure(e) => fail(e.getMessage)
     }
@@ -109,8 +109,8 @@ class GeneralizedLinearRegressionMasterTest extends FlatSpec with Matchers with 
   }
 
   override protected def afterEach(): Unit = {
-    super.afterEach()
     sparkSession.close()
+    super.afterEach()
   }
 
 }

@@ -32,3 +32,5 @@ lazy val sparkResearch = (project in file("."))
   .settings(
     name := "spark-research"
   )
+
+parallelExecution in Test := false
