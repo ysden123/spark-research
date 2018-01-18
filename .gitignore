@@ -2,6 +2,8 @@
 *.log
 .idea/codeStyles/Project.xml
 .idea/
+generalized-regression-model-test/
+linear-master-test/
 project/target/
-target/
 regression-model-test/
+target/

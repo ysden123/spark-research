@@ -10,7 +10,7 @@ import scala.util.{Failure, Success}
   * @author Yuriy Stul.
   */
 class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
-  val modelPath = "linear-master-tTest"
+  val modelPath = "linear-master-test"
   implicit var sparkSession: SparkSession = _
 
   override def beforeEach() {
