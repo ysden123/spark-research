@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Yuriy Stul
+ */
+
 package com.stulsoft.spark.research.regression
 
 import com.stulsoft.spark.research.data.generator.LinearFunction
@@ -9,7 +13,7 @@ import scala.util.{Failure, Success}
 /**
   * @author Yuriy Stul.
   */
-class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
+class GeneralizedLinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
   val modelPath = "linear-master-test"
   implicit var sparkSession: SparkSession = _
 
@@ -26,16 +30,16 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
     sparkSession.close()
   }
 
-  behavior of "LinearMaster"
+  behavior of "GeneralizedLinearMaster"
 
   "buildModel" should "build model" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new ModelMaster with GeneralizedLinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
   }
 
   "loadModel" should "load model" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new ModelMaster with GeneralizedLinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
     master.saveModel(modelPath) match {
@@ -49,7 +53,7 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
   }
 
   "saveModel" should "save model" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new ModelMaster with GeneralizedLinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
     master.saveModel(modelPath) match {
@@ -59,7 +63,7 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
   }
 
   "predict" should "predict correct value" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new ModelMaster with GeneralizedLinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
     master.predict(Vector(10.0, 20)) match {
