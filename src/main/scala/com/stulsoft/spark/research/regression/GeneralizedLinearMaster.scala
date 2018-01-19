@@ -2,7 +2,7 @@
  * Copyright (c) 2018. Yuriy Stul
  */
 
-package com.stulsoft.spark.research
+package com.stulsoft.spark.research.regression
 
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.spark.ml.feature.LabeledPoint
@@ -12,29 +12,23 @@ import org.apache.spark.sql.SparkSession
 
 import scala.util.{Failure, Success, Try}
 
-/**
-  * @author Yuriy Stul.
+/** Generalized linear regression model implementation
+  *
+  * @author Yuriy Stul
   */
-class GeneralizedLinearRegressionMaster(val sparkSession: SparkSession) extends LazyLogging {
-  require(sparkSession != null, "sparkSession should bew specified")
-
-  import sparkSession.implicits._
-
+trait GeneralizedLinearMaster extends Model with LazyLogging {
   private var model: GeneralizedLinearRegressionModel = _
 
-  def buildModel(trainingData: Vector[(Double, Vector[Double])]): GeneralizedLinearRegressionModel = {
+  override def buildModel(trainingData: Vector[(Double, Vector[Double])])(implicit sparkSession: SparkSession): Unit = {
     logger.info("Building model")
     require(trainingData != null && trainingData.nonEmpty, "trainingData should be specified")
-    val lr = new GeneralizedLinearRegression()
-      .setFamily("gaussian")
-
-    model = lr.fit(trainingData.map(d => LabeledPoint(d._1, Vectors.dense(d._2.toArray))).toDF)
-
-    logger.info("Built model")
-    model
+    import sparkSession.implicits._
+    val glr = new GeneralizedLinearRegression().setFamily("gaussian")
+    model = glr.fit(trainingData.map(d => LabeledPoint(d._1, Vectors.dense(d._2.toArray))).toDF)
+    logger.info("Builtmodel")
   }
 
-  def saveModel(path: String): Try[Boolean] = {
+  override def saveModel(path: String): Try[Boolean] = {
     require(path != null && !path.isEmpty, "path should be specified")
     if (model == null) {
       logger.error("Model doesn't exist. Call buildModel before predict")
@@ -54,12 +48,13 @@ class GeneralizedLinearRegressionMaster(val sparkSession: SparkSession) extends 
     }
   }
 
-  def loadModel(path: String): Try[GeneralizedLinearRegressionModel] = {
+  override def loadModel(path: String): Try[Boolean] = {
+    require(path != null && !path.isEmpty, "path should be specified")
     try {
       logger.info(s"Loading model from $path")
       model = GeneralizedLinearRegressionModel.load(path)
       logger.info(s"Loaded model from $path")
-      Success(model)
+      Success(true)
     }
     catch {
       case e: Throwable =>
@@ -68,12 +63,13 @@ class GeneralizedLinearRegressionMaster(val sparkSession: SparkSession) extends 
     }
   }
 
-  def predict(values: Vector[Double]): Try[Double] = {
+  override def predict(values: Vector[Double])(implicit sparkSession: SparkSession): Try[Double] = {
     require(values != null && values.nonEmpty, "values should be specified")
     if (model == null) {
       logger.error("Model doesn't exist. Call buildModel before predict")
       Failure(new IllegalStateException("A model was not created"))
     } else {
+      import sparkSession.implicits._
       if (values.length != model.numFeatures)
         Failure(new IllegalArgumentException(s"RegressionModelMaster.predict: number of values ${values.length} should be equal to ${model.numFeatures}"))
       else
@@ -86,4 +82,14 @@ class GeneralizedLinearRegressionMaster(val sparkSession: SparkSession) extends 
     }
   }
 
+  override def describe(): Try[Vector[String]] = {
+    if (model == null) {
+      logger.error("Model doesn't exist. Call buildModel before predict")
+      Failure(new IllegalStateException("A model was not created"))
+    } else {
+      Success(Vector(
+        "coefficients: " + model.coefficients.toArray.mkString(", ")
+      ))
+    }
+  }
 }

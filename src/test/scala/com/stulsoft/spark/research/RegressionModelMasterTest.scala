@@ -14,6 +14,7 @@ import scala.util.{Failure, Success}
   * @author Yuriy Stul
   */
 class RegressionModelMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
+  val modelPath = "regression-model-test"
   var sparkSession: SparkSession = _
 
   behavior of "RegressionModelMaster"
@@ -64,7 +65,6 @@ class RegressionModelMasterTest extends FlatSpec with Matchers with BeforeAndAft
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     val m1 = new RegressionModelMaster(sparkSession)
     m1.buildModel(experimentalData)
-    val modelPath = "regression-model-test"
     m1.saveModel(modelPath)
 
     val m2 = new RegressionModelMaster(sparkSession)
@@ -83,7 +83,6 @@ class RegressionModelMasterTest extends FlatSpec with Matchers with BeforeAndAft
   }
 
   "loadModel" should "load model" in {
-    val modelPath = "regression-model-test"
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     val m1 = new RegressionModelMaster(sparkSession)
     val _ = m1.buildModel(experimentalData)
