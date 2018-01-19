@@ -72,4 +72,16 @@ class GeneralizedLinearMasterTest extends FlatSpec with BeforeAndAfterEach with 
     }
   }
 
+  "describe" should "return lines with model's details" in {
+    val master = new ModelMaster with LinearMaster
+    val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
+    master.buildModel(experimentalData)
+    master.describe() match {
+      case Success(d: Vector[String]) =>
+        d.foreach(println)
+        succeed
+      case Failure(x) => fail(x.getMessage)
+    }
+  }
+
 }

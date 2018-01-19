@@ -1,10 +1,15 @@
+/*
+ * Copyright (c) 2018. Yuriy Stul
+ */
+
 package com.stulsoft.spark.research.regression
 
 import org.apache.spark.sql.SparkSession
 
 import scala.util.Try
 
-/**
+/** Regression model manager
+  *
   * @author Yuriy Stul.
   */
 trait ModelMaster {

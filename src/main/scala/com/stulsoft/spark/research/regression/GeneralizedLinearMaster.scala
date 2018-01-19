@@ -12,7 +12,8 @@ import org.apache.spark.sql.SparkSession
 
 import scala.util.{Failure, Success, Try}
 
-/**
+/** Generalized linear regression model implementation
+  *
   * @author Yuriy Stul
   */
 trait GeneralizedLinearMaster extends Model with LazyLogging {
@@ -78,6 +79,17 @@ trait GeneralizedLinearMaster extends Model with LazyLogging {
             .head()
             .getAs[Double]("prediction")
         }
+    }
+  }
+
+  override def describe(): Try[Vector[String]] = {
+    if (model == null) {
+      logger.error("Model doesn't exist. Call buildModel before predict")
+      Failure(new IllegalStateException("A model was not created"))
+    } else {
+      Success(Vector(
+        "coefficients: " + model.coefficients.toArray.mkString(", ")
+      ))
     }
   }
 }

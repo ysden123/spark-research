@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2018. Yuriy Stul
+ */
+
 package com.stulsoft.spark.research
 
 import com.typesafe.scalalogging.LazyLogging
