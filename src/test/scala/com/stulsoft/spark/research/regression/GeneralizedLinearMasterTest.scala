@@ -72,6 +72,16 @@ class GeneralizedLinearMasterTest extends FlatSpec with BeforeAndAfterEach with 
     }
   }
 
+  it should "predict for zero values" in {
+    val master = new ModelMaster with LinearMaster
+    val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
+    master.buildModel(experimentalData)
+    master.predict(Vector(0.0, 0.0)) match {
+      case Success(prediction) => println(prediction)
+      case Failure(e) => fail(e.getMessage)
+    }
+  }
+
   "describe" should "return lines with model's details" in {
     val master = new ModelMaster with LinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)

@@ -88,7 +88,9 @@ trait LinearMaster extends Model with LazyLogging {
       Failure(new IllegalStateException("A model was not created"))
     } else {
       Success(Vector(
-        "coefficients: " + model.coefficients.toArray.mkString(", ")
+        "coefficients: " + model.coefficients.toArray.mkString(", "),
+        "intercept = " + model.intercept,
+        model.explainParams()
       ))
     }
   }
