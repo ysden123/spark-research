@@ -33,13 +33,13 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
   behavior of "LinearMaster"
 
   "buildModel" should "build model" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new Object with LinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
   }
 
   "loadModel" should "load model" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new Object with LinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
     master.saveModel(modelPath) match {
@@ -53,7 +53,7 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
   }
 
   "saveModel" should "save model" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new Object with LinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
     master.saveModel(modelPath) match {
@@ -63,7 +63,7 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
   }
 
   "predict" should "predict correct value" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new Object with LinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
     master.predict(Vector(10.0, 20)) match {
@@ -73,7 +73,7 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
   }
 
   it should "predict for zero values" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new Object with LinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
     master.predict(Vector(0.0, 0.0)) match {
@@ -83,7 +83,7 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
   }
 
   "describe" should "return lines with model's details" in {
-    val master = new ModelMaster with LinearMaster
+    val master = new Object with LinearMaster
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     master.buildModel(experimentalData)
     master.describe() match {
@@ -93,5 +93,4 @@ class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
       case Failure(x) => fail(x.getMessage)
     }
   }
-
 }
