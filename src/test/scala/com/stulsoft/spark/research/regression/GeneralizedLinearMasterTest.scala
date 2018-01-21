@@ -89,6 +89,19 @@ class GeneralizedLinearMasterTest extends FlatSpec with BeforeAndAfterEach with 
     master.describe() match {
       case Success(d: Vector[String]) =>
         d.foreach(println)
+
+        val coefficients = d.filter(_.startsWith("coefficients:"))
+          .flatMap(x => x.split(" ").map(x2 => x2.replace(",", "")))
+        coefficients.length shouldBe 3
+
+        def delta = (i: Int, coefficient: Double) => {
+          val c = coefficients(i).toDouble
+          Math.abs(coefficient - coefficient) * 100.0 / coefficient
+        }
+
+        (delta(1, 1.0) < 5.0) shouldBe true
+        (delta(2, 2.0) < 5.0) shouldBe true
+
         succeed
       case Failure(x) => fail(x.getMessage)
     }
