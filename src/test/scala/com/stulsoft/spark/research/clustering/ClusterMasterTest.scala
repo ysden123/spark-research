@@ -10,6 +10,7 @@ import scala.util.{Failure, Success}
   * @author Yuriy Stul.
   */
 class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
+  val modelPath = "cluster-master-test"
   implicit var sparkSession: SparkSession = _
 
   override def beforeEach() {
@@ -27,9 +28,9 @@ class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   behavior of "ClusterMaster"
 
-  "buildCluster" should "build cluster model" in {
+  "buildModel" should "build cluster model" in {
     val master = new ClusterMaster
-    master.buildCluster(Cluster.generateData1())
+    master.buildModel(Cluster.generateData1())
     master.describe() match {
       case Success(_) =>
         succeed
@@ -39,7 +40,7 @@ class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   "predict" should "return XYZ" in {
     val master = new ClusterMaster
-    master.buildCluster(Cluster.generateData1())
+    master.buildModel(Cluster.generateData1())
     master.predict(Vector(1, 2, 3, 4, 5)) match {
       case Success(id) => id shouldBe 0
       case Failure(e) => fail(e.getMessage)
@@ -60,7 +61,7 @@ class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
 
   "describe" should "describe cluster details" in {
     val master = new ClusterMaster
-    master.buildCluster(Cluster.generateData1())
+    master.buildModel(Cluster.generateData1())
     master.describe() match {
       case Success(descriptions) =>
         println(descriptions)
@@ -70,4 +71,21 @@ class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
     }
   }
 
+  "saveModel and loadModel" should "save and load model" in {
+    val master1 = new ClusterMaster
+    master1.buildModel(Cluster.generateData1())
+    master1.saveModel(modelPath) match {
+      case Success(_) =>
+        val master2 = new ClusterMaster
+        master2.loadModel(modelPath) match {
+          case Success(_) =>
+            master2.predict(Vector(20.0, 6, 12, 30, 900)) match {
+              case Success(id) => id shouldBe 1
+              case Failure(e) => fail(e.getMessage)
+            }
+          case Failure(e) => fail(e.getMessage)
+        }
+      case Failure(e) => fail(e.getMessage)
+    }
+  }
 }
