@@ -31,7 +31,7 @@ class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
     val master = new ClusterMaster
     master.buildCluster(Cluster.generateData1())
     master.describe() match {
-      case Success(descriptions) =>
+      case Success(_) =>
         succeed
       case Failure(e) => fail(e.getMessage)
     }
@@ -64,7 +64,7 @@ class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
     master.describe() match {
       case Success(descriptions) =>
         println(descriptions)
-        (descriptions.length > 0) shouldBe true
+        descriptions.nonEmpty shouldBe true
         succeed
       case Failure(e) => fail(e.getMessage)
     }
