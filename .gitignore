@@ -2,6 +2,7 @@
 *.log
 .idea/codeStyles/Project.xml
 .idea/
+cluster-master-test/
 generalized-regression-model-test/
 linear-master-test/
 project/target/
