@@ -10,7 +10,7 @@ import scala.util.{Failure, Success}
   * @author Yuriy Stul.
   */
 class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
-  val modelPath = "cluster-master-test"
+  val modelPath = "target/models/cluster-master-test"
   implicit var sparkSession: SparkSession = _
 
   override def beforeEach() {
