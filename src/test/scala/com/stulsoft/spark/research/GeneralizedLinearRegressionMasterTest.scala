@@ -14,7 +14,7 @@ import scala.util.{Failure, Success}
   * @author Yuriy Stul.
   */
 class GeneralizedLinearRegressionMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
-  val modelPath = "generalized-regression-model-test"
+  val modelPath = "target/models/generalized-regression-model-test"
   var sparkSession: SparkSession = _
 
   behavior of "GeneralizedLinearRegressionMaster"
