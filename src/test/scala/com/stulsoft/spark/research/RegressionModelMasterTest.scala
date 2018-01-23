@@ -23,7 +23,7 @@ class RegressionModelMasterTest extends FlatSpec with Matchers with BeforeAndAft
     val experimentalData = LinearFunction.generate(50, Vector(10.0, 1.0, 2.0), 1.0)
     val m = new RegressionModelMaster(sparkSession)
     val _ = m.buildModel(experimentalData)
-    m.saveModel("regression-model-test") match {
+    m.saveModel(modelPath) match {
       case Success(r) => r shouldBe true
       case Failure(e) => fail(e.getMessage)
     }
