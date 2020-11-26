@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2020. StulSoft
+  -->
+
+<Configuration status="WARN">
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger(%line) - %msg%n"/>
+        </Console>
+        <File name="File" fileName="logs/spark-research-test.log" append="true">
+            <PatternLayout pattern="%d{DEFAULT} [%t] %-5level %logger(%line) - %msg%n"/>
+        </File>
+    </Appenders>
+    <Loggers>
+        <Root level="debug">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Root>
+        <Logger name="org.apache" level="error"/>
+        <Logger name="org.sparkproject" level="error"/>
+        <Logger name="io" level="error"/>
+        <Logger name="io" level="error"/>
+    </Loggers>
+</Configuration>
