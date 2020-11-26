@@ -25,7 +25,7 @@
     <logger name="org.apache">
         <level value="error"/>
     </logger>
-    <logger name="org.spark_project">
+    <logger name="org.sparkproject">
         <level value="error"/>
     </logger>
     <logger name="io">

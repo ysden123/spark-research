@@ -1,16 +1,16 @@
 import sbt.Keys.libraryDependencies
 
-lazy val sparkVersion = "2.2.1"
-lazy val scalaLoggingVersion = "3.7.2"
-lazy val scalaTestVersion = "3.0.4"
+lazy val sparkVersion = "3.0.1"
+lazy val scalaLoggingVersion = "3.9.2"
+lazy val scalaTestVersion = "3.2.3"
 
-lazy val log4jVersion = "2.10.0"
-lazy val log4jApiScalaVersion = "11.0"
+lazy val log4jVersion = "2.14.0"
+lazy val log4jApiScalaVersion = "12.0"
 
 lazy val commonSettings = Seq(
   organization := "com.stulsoft.spark-research",
-  version := "1.0.1",
-  scalaVersion := "2.11.8",
+  version := "1.0.2",
+  scalaVersion := "2.12.12",
   scalacOptions ++= Seq(
     "-feature",
     "-language:implicitConversions",

@@ -6,14 +6,16 @@ package com.stulsoft.spark.research.regression
 
 import com.stulsoft.spark.research.data.generator.LinearFunction
 import org.apache.spark.sql.SparkSession
-import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.util.{Failure, Success}
 
 /**
   * @author Yuriy Stul.
   */
-class LinearMasterTest extends FlatSpec with BeforeAndAfterEach with Matchers {
+class LinearMasterTest extends AnyFlatSpec with BeforeAndAfterEach with Matchers {
   val modelPath = "target/models/linear-master-test"
   implicit var sparkSession: SparkSession = _
 

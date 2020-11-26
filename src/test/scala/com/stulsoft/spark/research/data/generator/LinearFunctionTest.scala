@@ -4,12 +4,14 @@
 
 package com.stulsoft.spark.research.data.generator
 
-import org.scalatest.{FlatSpec, Matchers}
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
+
 
 /**
   * @author Yuriy Stul
   */
-class LinearFunctionTest extends FlatSpec with Matchers {
+class LinearFunctionTest extends AnyFlatSpec with Matchers {
 
   behavior of "LinearFunction"
 

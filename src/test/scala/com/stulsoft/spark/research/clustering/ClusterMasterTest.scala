@@ -2,14 +2,16 @@ package com.stulsoft.spark.research.clustering
 
 import com.stulsoft.spark.research.data.generator.Cluster
 import org.apache.spark.sql.SparkSession
-import org.scalatest.{BeforeAndAfterEach, FlatSpec, Matchers}
+import org.scalatest.BeforeAndAfterEach
+import org.scalatest.flatspec.AnyFlatSpec
+import org.scalatest.matchers.should.Matchers
 
 import scala.util.{Failure, Success}
 
 /**
   * @author Yuriy Stul.
   */
-class ClusterMasterTest extends FlatSpec with Matchers with BeforeAndAfterEach {
+class ClusterMasterTest extends AnyFlatSpec with Matchers with BeforeAndAfterEach {
   val modelPath = "target/models/cluster-master-test"
   implicit var sparkSession: SparkSession = _
 
