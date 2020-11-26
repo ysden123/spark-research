@@ -8,3 +8,7 @@ linear-master-test/
 project/target/
 regression-model-test/
 target/
+
+.bsp/
+
+logs/
